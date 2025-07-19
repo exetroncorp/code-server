@@ -1,4 +1,4 @@
-Add display language support
+Add display language support ok
 
 VS Code web appears to implement language support by setting a cookie and
 downloading language packs from a URL configured in the product.json. This patch
