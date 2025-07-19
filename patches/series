@@ -1,9 +1,9 @@
-# Essential patches for compilation
+# Essential patches for compilation - MUST be enabled
 proposed-api.diff
 marketplace.diff
 integration.diff
+disable-builtin-ext-update.diff
 # webview.diff
-# disable-builtin-ext-update.diff
 # unique-db.diff
 # local-storage.diff
 # sourcemaps.diff
