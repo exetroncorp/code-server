@@ -7,12 +7,12 @@ set -euo pipefail
 MINIFY=${MINIFY-true}
 
 delete-bin-script() {
-  rm -f "lib/vscode-reh-web-linux-x64/bin/$1"
+  rm -f "lib/vscode-reh-web/bin/$1"
 }
 
 copy-bin-script() {
   local script="$1"
-  local dest="lib/vscode-reh-web-linux-x64/bin/$script"
+  local dest="lib/vscode-reh-web/bin/$script"
   cp "lib/vscode/resources/server/bin/$script" "$dest"
   sed -i.bak "s/@@VERSION@@/$(vscode_version)/g" "$dest"
   sed -i.bak "s/@@COMMIT@@/$BUILD_SOURCEVERSION/g" "$dest"
@@ -111,17 +111,14 @@ EOF
   # Add this line after the product.json modification to debug
   echo "Checking for duplicate language service entries..."
   
-  # Any platform here works since we will do our own packaging.  We have to do
-  # this because we have an NPM package that could be installed on any platform.
-  # The correct platform dependencies and scripts will be installed as part of
-  # the post-install during `npm install` or when building a standalone release.
+  # Try the generic reh-web target instead of platform-specific
   node --max-old-space-size=16384 --optimize-for-size \
        ./node_modules/gulp/bin/gulp.js \
-       "vscode-reh-web-linux-x64${MINIFY:+-min}"
+       "vscode-reh-web${MINIFY:+-min}"
   
-  # Add this after the build to remove potential duplicates
-  echo "Cleaning up potential duplicate language services..."
-  find lib/vscode-reh-web-linux-x64 -name "*.js" -exec grep -l "registerCompletionItemProvider.*java" {} \; | sort | uniq -d | head -n -1 | xargs rm -f
+  # Remove the duplicate cleanup since we're changing targets
+  # echo "Cleaning up potential duplicate language services..."
+  # find lib/vscode-reh-web-linux-x64 -name "*.js" -exec grep -l "registerCompletionItemProvider.*java" {} \; | sort | uniq -d | head -n -1 | xargs rm -f
 
   # Reset so if you develop after building you will not be stuck with the wrong
   # commit (the dev client will use `oss-dev` but the dev server will still use
@@ -130,7 +127,8 @@ EOF
 
   popd
 
-  pushd lib/vscode-reh-web-linux-x64
+  # Update the directory reference to match the new build target
+  pushd lib/vscode-reh-web
   # Make sure Code took the version we set in the environment variable.  Not
   # having a version will break display languages.
   if ! jq -e .commit product.json; then
@@ -139,18 +137,19 @@ EOF
   fi
   popd
 
+  # Comment out all bin script operations since vscode-web doesn't use them
   # These provide a `code-server` command in the integrated terminal to open
   # files in the current instance.
-  delete-bin-script remote-cli/code-server
-  copy-bin-script remote-cli/code-darwin.sh
-  copy-bin-script remote-cli/code-linux.sh
-  copy-bin-script remote-cli/code.cmd
+  # delete-bin-script remote-cli/code-server
+  # copy-bin-script remote-cli/code-darwin.sh
+  # copy-bin-script remote-cli/code-linux.sh
+  # copy-bin-script remote-cli/code.cmd
 
   # These provide a way for terminal applications to open browser windows.
-  delete-bin-script helpers/browser.sh
-  copy-bin-script helpers/browser-darwin.sh
-  copy-bin-script helpers/browser-linux.sh
-  copy-bin-script helpers/browser.cmd
+  # delete-bin-script helpers/browser.sh
+  # copy-bin-script helpers/browser-darwin.sh
+  # copy-bin-script helpers/browser-linux.sh
+  # copy-bin-script helpers/browser.cmd
 }
 
 main "$@"
