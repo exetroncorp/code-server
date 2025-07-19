@@ -114,7 +114,7 @@ EOF
   # Try the generic reh-web target instead of platform-specific
   node --max-old-space-size=16384 --optimize-for-size \
        ./node_modules/gulp/bin/gulp.js \
-       "vscode-reh-web${MINIFY:+-min}"
+       "vscode-reh-web-linux-x64${MINIFY:+-min}"
   
   # Remove the duplicate cleanup since we're changing targets
   # echo "Cleaning up potential duplicate language services..."
