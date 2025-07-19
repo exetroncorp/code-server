@@ -108,6 +108,9 @@ main() {
 EOF
   ) > product.json
 
+  # Add this line after the product.json modification to debug
+  echo "Checking for duplicate language service entries..."
+  
   # Any platform here works since we will do our own packaging.  We have to do
   # this because we have an NPM package that could be installed on any platform.
   # The correct platform dependencies and scripts will be installed as part of
@@ -115,6 +118,10 @@ EOF
   node --max-old-space-size=16384 --optimize-for-size \
        ./node_modules/gulp/bin/gulp.js \
        "vscode-reh-web-linux-x64${MINIFY:+-min}"
+  
+  # Add this after the build to remove potential duplicates
+  echo "Cleaning up potential duplicate language services..."
+  find lib/vscode-reh-web-linux-x64 -name "*.js" -exec grep -l "registerCompletionItemProvider.*java" {} \; | sort | uniq -d | head -n -1 | xargs rm -f
 
   # Reset so if you develop after building you will not be stuck with the wrong
   # commit (the dev client will use `oss-dev` but the dev server will still use
