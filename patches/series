@@ -1,7 +1,8 @@
-proposed-api.diff
-marketplace.diff
-webview.diff
-disable-builtin-ext-update.diff
-unique-db.diff
-local-storage.diff
-sourcemaps.diff
+# All patches commented out for testing
+# proposed-api.diff
+# marketplace.diff
+# webview.diff
+# disable-builtin-ext-update.diff
+# unique-db.diff
+# local-storage.diff
+# sourcemaps.diff
