@@ -2,13 +2,9 @@ proposed-api.diff
 marketplace.diff
 webview.diff
 disable-builtin-ext-update.diff
-update-check.diff
-logout.diff
-store-socket.diff
 proxy-uri.diff
 unique-db.diff
 local-storage.diff
-service-worker.diff
 sourcemaps.diff
 external-file-actions.diff
 telemetry.diff
