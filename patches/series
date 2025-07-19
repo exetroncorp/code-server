@@ -1,6 +1,6 @@
 # All patches commented out for testing
 # proposed-api.diff
-# marketplace.diff
+marketplace.diff
 # webview.diff
 # disable-builtin-ext-update.diff
 # unique-db.diff
