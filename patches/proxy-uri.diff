@@ -1,4 +1,4 @@
-Add VSCODE_PROXY_URI environment variable
+Add VSCODE_PROXY_URI environment variable TEST
 
 This can be used by extensions to open a port and access it through the proxy.
 
