@@ -178,7 +178,7 @@ jobs:
       - name: Download deb artifacts
         uses: robinraju/release-downloader@v1.12
         with:
-          repository: "coder/code-server"
+          repository: "exetroncorp/code-server"
           tag: v${{ env.VERSION }}
           fileName: "*.deb"
           out-file-path: "release-packages"
