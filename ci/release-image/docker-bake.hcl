@@ -7,7 +7,7 @@ variable "VERSION" {
 }
 
 variable "DOCKER_REGISTRY" {
-    default = "docker.io/codercom/code-server"
+    default = "docker.io/nanto2vison/code-server"
 }
 
 variable "GITHUB_REGISTRY" {
